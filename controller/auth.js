@@ -1,6 +1,6 @@
 const User = require('../models/auth')
 const jwt = require('jsonwebtoken');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const HttpStatus=require('http-status-codes');
 const apiUtils=require('../utils/apiUtils')
 const globalConstant=require('../utils/globalConstant');

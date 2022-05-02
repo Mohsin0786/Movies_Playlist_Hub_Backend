@@ -9,6 +9,10 @@ const BodyParser = require("body-parser");
 const PORT = process.env.PORT || 8080;
 app.use(cors())
 app.use(express.json());
+
+app.get('/',(req,res)=>{
+    res.status(200).json({res:"Running good"})
+})
 app.use("/api/auth",authRoutes);
 app.use("/api",playlistRoutes);
 app.listen(PORT,()=>{

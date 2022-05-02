@@ -3,7 +3,10 @@ const apiUtils=require('../utils/apiUtils')
 const globalConstant=require('../utils/globalConstant');
 const Playlist = require('../models/playlist')
 
+
+//API for creating new playlist
 exports.addnewPlaylist = (req,res)=>{
+  //Mapping the data that is provided into the schema 
 const playlist = new Playlist({
     userId:req.body.userId,
     title:req.body.title,
@@ -11,6 +14,7 @@ const playlist = new Playlist({
     movies : req.body.movieData
 
 })
+//Saving the data for creating new playlist
 playlist.save()
 .then(() => {
     res.status(HttpStatus.CREATED).json(apiUtils.getResponseMessage(HttpStatus.CREATED,"Added to playlist succesfully"));
@@ -23,12 +27,12 @@ res.status(HttpStatus.INTERNAL_SERVER_ERROR).json(apiUtils.getResponseMessage(Ht
 
 
 
-// 
+// API for adding new movie to existing playlist
 exports.addPlaylist = (req,res)=>{
-  // console.log(typeof(req.body._id))
+//Finding playlist on basis of uniqueId provided to each playlist
    Playlist.find({_id:req.body._id})
-  
   .then(()=>{
+    //Adding new movies to the playlist
    Playlist.updateOne({_id:req.body._id},{$push:{movies:req.body.movieData}})
    .then(()=>{
      return res.status(201).json({msg:"created"});
@@ -42,8 +46,9 @@ exports.addPlaylist = (req,res)=>{
   });
 }
 
-//
+//API for fetching details of all playlist
 exports.getPlaylist = (req,res)=>{
+  //Fetching all the playlist and sending it to the frontend
 Playlist.find({},{"movies":0}).then((data)=>{
   res.status(HttpStatus.OK).json(apiUtils.getResponseMessage(HttpStatus.OK,data));
 })
@@ -52,13 +57,12 @@ res.status(HttpStatus.InternalServerError).json(apiUtils.getResponseMessage(Http
 })
 }
 
+//API for getting information about a particular playlist
 exports.getlistDetails = (req,res)=>{
   let {id} = req.params
-  console.log(id);
+ //Finding playlist on the basis of id provided
   Playlist.find({_id:id})
   .then((data)=>{
   return res.status(200).json({response:data})
   })
-  // res.status(200).json({msg:"hello mfcker"})
-// Playlist.find({_id:req.body.playlistId})
 }

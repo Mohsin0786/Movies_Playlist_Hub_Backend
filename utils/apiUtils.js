@@ -14,15 +14,3 @@ exports.generateAccessToken=(payload,token_secret)=>{
 }
 
 
-// exports.verifyAccessToken=(token,token_secret)=>{
-//     return new Promise((resolve,reject)=>{
-//         jwt.verify(token,token_secret,(err,decoded)=>{
-//             if(err){
-//                 reject(err)
-//             }
-//             else{
-//                 resolve(decoded);
-//             }
-//         })
-//     })
-// }
